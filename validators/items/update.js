@@ -1,21 +1,26 @@
 const { body, param, validationResult } = require("express-validator");
 
 const validateUpdateItem = [
-  param("id").isInt({ min: 1 }).withMessage("ID must be a positive integer"),
+  param("id")
+    .isInt({ min: 1 })
+    .withMessage("Item ID must be a positive integer"),
 
   body("name")
-    .optional()
     .isString()
     .notEmpty()
-    .withMessage("Name cannot be empty"),
+    .withMessage("Name is required and cannot be empty"),
 
-  body("details").optional().isString(),
+  body("details").isString().withMessage("Details must be a string"),
 
-  body("amount").optional().isInt({ min: 0 }),
+  body("amount")
+    .isInt({ min: 0 })
+    .withMessage("Amount must be a non-negative integer"),
 
-  body("imageUrl").optional().isString(),
+  body("imageUrl").isString().withMessage("Image URL must be a string"),
 
-  body("categoryId").optional().isInt({ min: 1 }),
+  body("categoryId")
+    .isInt({ min: 1 })
+    .withMessage("Category ID must be a positive integer"),
 
   (req, res, next) => {
     const errors = validationResult(req);

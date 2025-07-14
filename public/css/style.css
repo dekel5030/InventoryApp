@@ -1,0 +1,129 @@
+/* Default (light theme) variables */
+:root {
+  --bg-color: #f9f9f9;
+  --text-color: #222;
+  --header-bg: #ffffff;
+  --footer-bg: #f1f1f1;
+  --accent-color: #007bff;
+  --font-family: "Segoe UI", sans-serif;
+}
+
+/* Dark theme overrides */
+body.dark {
+  --bg-color: #1e1e1e;
+  --text-color: #f0f0f0;
+  --header-bg: #2c2c2c;
+  --footer-bg: #2a2a2a;
+  --accent-color: #0d6efd;
+}
+
+/* Global styles */
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header {
+  background-color: var(--header-bg);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+header .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+header .mode-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+main {
+  padding: 2rem;
+  min-height: 70vh;
+}
+
+footer {
+  background-color: var(--footer-bg);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  border-top: 1px solid #ccc;
+}
+
+main.home {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: var(--header-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+main.home h1 {
+  font-size: 2rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+main.home p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+main.home h2 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+main.home ul {
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+main.home ul li {
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+}
+
+main.home .note {
+  margin-top: 2rem;
+  font-style: italic;
+  color: #999;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.buttons button {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.buttons button:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
