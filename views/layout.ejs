@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,8 +7,11 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <%- include("./partials/header.ejs") %> <%-
-    include("./partials/mainSection.ejs") %> <%- include("partials/footer") %>
+    <%- include("./partials/header.ejs") %> <% if (categories) { %> <%-
+    include("./partials/categoryGrid.ejs", { categories }) %> <% } else if
+    (items) { %> <%- include("./partials/itemGrid.ejs", { items }) %> <% } else
+    { %> <%- include("./partials/mainSection.ejs") %> <% } %> <%-
+    include("partials/footer") %>
 
     <script>
       function toggleTheme() {

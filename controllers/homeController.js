@@ -1,5 +1,8 @@
 async function renderHome(req, res) {
-  res.render("home");
+  res.render("layout", {
+    categories: null,
+    items: null,
+  });
 }
 
 module.exports = {

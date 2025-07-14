@@ -89,7 +89,10 @@ async function getItem(req, res) {
 async function getAllItems(req, res) {
   try {
     const items = await itemsDB.getAllItems();
-    res.json(items);
+    res.render("layout", {
+      categories: null,
+      items,
+    });
   } catch (err) {
     console.error("Get all items error:", err.message);
     res.status(500).json({ error: "Server error" });
