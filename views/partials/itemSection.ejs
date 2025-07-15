@@ -1,0 +1,23 @@
+<section class="item-container">
+  <div class="item-controls">
+    <button class="item-page-buttons delete-button" aria-label="Delete item" 
+    onclick="confirmDelete(<%= item.id %>)">X</button>
+    <button class="item-page-buttons edit-button" aria-label="Edit item" 
+    onclick="location.href='/items/<%= item.id %>/edit'">✏️</button>
+  </div> 
+
+  <div class="item-image-wrapper">
+    <img 
+      src="<%= item.imageUrl || '/images/placeholder.jpeg' %>" 
+      alt="<%= item.name + ' image' %>" 
+      class="item-image"
+    />
+  </div>
+
+  <article class="item-details">
+    <h2 class="item-title"><%= item.name %></h2>
+    <p class="item-description"><%= item.details %></p>
+    <p class="item-stock"><%= item.amount %> in stock</p>
+    <p class="item-price">$<%= item.price %></p>
+  </article>
+</section>

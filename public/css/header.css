@@ -1,0 +1,48 @@
+.app-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--header-bg);
+  border-bottom: 1px solid #ccc;
+}
+
+header .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.app-header .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent-color);
+  background: none;
+  color: var(--text-color);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.mode-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+}

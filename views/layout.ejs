@@ -3,61 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inventory App</title>
+    <title><%= locals.pageTitle || "Inventory App" %></title>
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    <link rel="stylesheet" href="/css/grid.css" />
+    <link rel="stylesheet" href="/css/itemSection.css" />
+    <link rel="stylesheet" href="/css/mainSection.css" />
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
-    <div class="action-buttons">
-      <button onclick="showForm('categoryForm')">+ Add Category</button>
-      <button onclick="showForm('itemForm')">+ Add Item</button>
-    </div>
-    <%- include("./partials/forms/addItemForm.ejs") %> <%-
-    include("./partials/forms/addCategoryForm.ejs") %> <% if (locals.categories)
-    { %> <%- include("./partials/grid.ejs", { categories, title: "Categories" })
-    %> <% } else if (locals.items) { %> <%- include("./partials/grid.ejs", {
-    items, title: "Items" }) %> <% } else{ %> <%-
-    include("./partials/mainSection.ejs") %> <% } %> <%-
-    include("partials/footer") %>
 
-    <script>
-      function toggleTheme() {
-        document.body.classList.toggle("dark");
-        localStorage.setItem(
-          "theme",
-          document.body.classList.contains("dark") ? "dark" : "light"
-        );
-      }
+    <main class="main-content">
+      <%- include(locals.viewToRender) %>
+    </main>
 
-      window.addEventListener("DOMContentLoaded", () => {
-        if (localStorage.getItem("theme") === "dark") {
-          document.body.classList.add("dark");
-        }
-      });
-
-      function showForm(id) {
-        const form = document.getElementById(id);
-        const otherFormId = id === "categoryForm" ? "itemForm" : "categoryForm";
-        const otherForm = document.getElementById(otherFormId);
-
-        const isCurrentlyVisible = !form.classList.contains("hidden");
-
-        otherForm.classList.add("hidden");
-
-        if (isCurrentlyVisible) {
-          form.classList.add("hidden");
-        } else {
-          form.classList.remove("hidden");
-        }
-      }
-
-      function handleCardClick(type, id) {
-        if (type === "item") {
-          window.location.href = `/items/${id}`;
-        } else if (type === "category") {
-          window.location.href = `/categories/${id}`;
-        }
-      }
-    </script>
+    <%- include("./partials/footer.ejs") %>
   </body>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+
+      const newTheme = document.body.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("theme", newTheme);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+      }
+    });
+  </script>
+  <script src="/js/confirmDelete.js"></script>
 </html>

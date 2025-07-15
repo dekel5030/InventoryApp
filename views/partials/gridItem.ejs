@@ -1,15 +1,15 @@
 <div
   class="card"
-  onclick="handleCardClick(<%= item.id ? `'item', ${item.id}` : `'category', ${item.category_id}` %>)"
+  onclick="location.href='<%= url %>/<%= item.id %>'"
   style="cursor: pointer"
 >
   <img
     src="<%= item.imageUrl || '/images/placeholder.jpeg' %>"
-    alt="<%= item.name %>"
+    alt="<%= item.name || "Untitled" %>"
     class="card-image"
   />
   <div class="card-content">
-    <h3 class="card-title"><%= item.name %></h3>
+    <h3 class="card-title"><%= item.name || "Untitled" %></h3>
 
     <% if (!isNaN(item.price)) { %>
     <p class="card-price">Price: $<%= Number(item.price).toFixed(2) %></p>

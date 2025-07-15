@@ -1,0 +1,40 @@
+.grid {
+  padding: 0 2rem 2rem 2rem;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.grid h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.item-card {
+  background-color: var(--bg-alt, #f5f5f5);
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.item-card h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.item-card p {
+  margin: 0.5rem 0;
+}

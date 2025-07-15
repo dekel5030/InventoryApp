@@ -74,17 +74,15 @@ async function getItem(req, res) {
 
   try {
     const item = await itemsDB.getItemById(id);
-    //const categories = await categoriesDB.getAllCategories();
-    const categories = [
-      { id: 1, name: "Laptops" },
-      { id: 2, name: "Monitors" },
-      { id: 3, name: "Keyboards" },
-    ];
+
     if (!item) {
       return res.status(404).json({ error: "Item not found" });
     }
 
-    res.render("itemPage", { item, categories });
+    res.render("layout", {
+      item: item,
+      viewToRender: "./partials/itemSection.ejs",
+    });
   } catch (err) {
     console.error("Get item error:", err.message);
     res.status(500).json({ error: "Server error" });
@@ -100,7 +98,9 @@ async function getAllItems(req, res) {
     }));
 
     res.render("layout", {
+      pageTitle: "All Items",
       items: normalizedItems,
+      viewToRender: "./partials/itemsGrid.ejs",
     });
   } catch (err) {
     console.error("Get all items error:", err.message);
