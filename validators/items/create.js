@@ -37,7 +37,6 @@ const validateCreateItem = [
     .withMessage("Price must be a non-negative number."),
 
   (req, res, next) => {
-    console.log("BODY:", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

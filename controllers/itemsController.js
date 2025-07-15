@@ -1,4 +1,5 @@
 const itemsDB = require("../db/itemsQueries");
+const Item = require("../models/Item");
 
 async function renderCreateView(req, res) {
   res.render("layout", {
@@ -16,20 +17,10 @@ async function renderCreateView(req, res) {
 }
 
 async function createItem(req, res) {
-  const { name, details, amount, imageUrl, categoryId, price } = req.body;
-  const item = { name, details, amount, imageUrl, categoryId, price };
-
   try {
-    const imageUrl = req.file
-      ? `/uploads/${req.file.filename}`
-      : req.body.imageUrl;
-    const newItem = await itemsDB.createItem({
-      ...item,
-      imageUrl,
-      categoryId: 1,
-    });
-
-    res.status(201).json(newItem);
+    const item = Item.fromForm(req.body, req.file);
+    const newItem = await itemsDB.createItem(item.toDbObject());
+    res.redirect("/items");
   } catch (err) {
     console.error("Create error:", err.message);
     res.status(500).json({ error: "Server error" });
@@ -38,21 +29,16 @@ async function createItem(req, res) {
 
 async function renderEditView(req, res) {
   const id = Number(req.params.id);
-
   try {
-    const item = await itemsDB.getItemById(id);
+    let item = await itemsDB.getItemById(id);
 
     if (!item) {
       return res.status(404).send("Item not found");
     }
-    const { image_url, category_id, ...rest } = item;
+    item = Item.fromDb(item);
     res.render("layout", {
       viewToRender: "./partials/editItemSection",
-      item: {
-        ...rest,
-        imageUrl: image_url,
-        categoryId: category_id,
-      },
+      item,
       formAction: `/items/${item.id}?_method=PATCH`,
     });
   } catch (err) {
@@ -87,7 +73,7 @@ async function patchItem(req, res) {
       return res.status(404).json({ error: "Item not found" });
     }
 
-    res.json(updatedItem);
+    res.redirect("/items/" + id);
   } catch (err) {
     console.error("Update error:", err.message);
     res.status(500).json({ error: "Server error" });

@@ -18,8 +18,15 @@ async function createItem(item) {
   const query = `INSERT INTO items (name, details, amount, image_url, category_id, price)
                  VALUES ($1, $2, $3, $4, $5, $6)
                  RETURNING *;`;
-  const { name, details, amount, imageUrl, categoryId, price } = item;
-  const params = [name, details, amount, imageUrl, categoryId, price];
+
+  const params = [
+    item.name,
+    item.details,
+    item.amount,
+    item.image_url,
+    item.category_id,
+    item.price,
+  ];
   const { rows } = await runQuery(query, params);
 
   return rows[0];
