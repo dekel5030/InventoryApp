@@ -1,11 +1,17 @@
 const { body, validationResult } = require("express-validator");
 
 const validateCreateItem = [
-  body("name").isString().notEmpty(),
-  body("details").optional().isString(),
-  body("amount").isInt({ min: 0 }),
-  body("imageUrl").isString().notEmpty(),
-  body("categoryId").isInt({ min: 1 }),
+  body("name").trim().isString().notEmpty(),
+  body("details").optional().trim().isString(),
+
+  // ✅ Convert string to int
+  body("amount").toInt().isInt({ min: 0 }),
+
+  // ✅ Convert string to int
+  body("categoryId").toInt().isInt({ min: 1 }),
+
+  // ✅ Convert string to float (for decimal prices)
+  body("price").toFloat().isFloat({ min: 0 }),
 
   (req, res, next) => {
     const errors = validationResult(req);

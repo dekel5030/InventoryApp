@@ -5,8 +5,8 @@ async function renderCreateView(req, res) {
 }
 
 async function createItem(req, res) {
-  const { name, details, amount, imageUrl, categoryId } = req.body;
-  const item = { name, details, amount, imageUrl, categoryId };
+  const { name, details, amount, imageUrl, categoryId, price } = req.body;
+  const item = { name, details, amount, imageUrl, categoryId, price };
 
   try {
     const newItem = await itemsDB.createItem(item);
@@ -74,12 +74,17 @@ async function getItem(req, res) {
 
   try {
     const item = await itemsDB.getItemById(id);
-
+    //const categories = await categoriesDB.getAllCategories();
+    const categories = [
+      { id: 1, name: "Laptops" },
+      { id: 2, name: "Monitors" },
+      { id: 3, name: "Keyboards" },
+    ];
     if (!item) {
       return res.status(404).json({ error: "Item not found" });
     }
 
-    res.json(item);
+    res.render("itemPage", { item, categories });
   } catch (err) {
     console.error("Get item error:", err.message);
     res.status(500).json({ error: "Server error" });
@@ -89,9 +94,13 @@ async function getItem(req, res) {
 async function getAllItems(req, res) {
   try {
     const items = await itemsDB.getAllItems();
+    const normalizedItems = items.map((item) => ({
+      ...item,
+      price: item.price !== null ? Number(item.price) : null,
+    }));
+
     res.render("layout", {
-      categories: null,
-      items,
+      items: normalizedItems,
     });
   } catch (err) {
     console.error("Get all items error:", err.message);

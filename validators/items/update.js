@@ -22,6 +22,10 @@ const validateUpdateItem = [
     .isInt({ min: 1 })
     .withMessage("Category ID must be a positive integer"),
 
+  body("price")
+    .isInt({ min: 0 })
+    .withMessage("Price must be a positive integer"),
+
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

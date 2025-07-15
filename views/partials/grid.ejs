@@ -1,0 +1,12 @@
+<section class="grid">
+  <h2><%= title || "Items" %></h2>
+
+  <% if (!items || items.length === 0) { %>
+  <p>No items found.</p>
+  <% } else { %>
+  <div class="item-list">
+    <% items.forEach(item => { %> <%- include('./gridItem', { item }) %> <% })
+    %>
+  </div>
+  <% } %>
+</section>

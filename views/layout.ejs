@@ -7,10 +7,17 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <%- include("./partials/header.ejs") %> <% if (categories) { %> <%-
-    include("./partials/categoryGrid.ejs", { categories }) %> <% } else if
-    (items) { %> <%- include("./partials/itemGrid.ejs", { items }) %> <% } else
-    { %> <%- include("./partials/mainSection.ejs") %> <% } %> <%-
+    <%- include("./partials/header.ejs") %>
+    <div class="action-buttons">
+      <button onclick="showForm('categoryForm')">+ Add Category</button>
+      <button onclick="showForm('itemForm')">+ Add Item</button>
+    </div>
+    <%- include("./partials/forms/addItemForm.ejs") %> <%-
+    include("./partials/forms/addCategoryForm.ejs") %> <% if (locals.categories)
+    { %> <%- include("./partials/grid.ejs", { categories, title: "Categories" })
+    %> <% } else if (locals.items) { %> <%- include("./partials/grid.ejs", {
+    items, title: "Items" }) %> <% } else{ %> <%-
+    include("./partials/mainSection.ejs") %> <% } %> <%-
     include("partials/footer") %>
 
     <script>
@@ -27,6 +34,30 @@
           document.body.classList.add("dark");
         }
       });
+
+      function showForm(id) {
+        const form = document.getElementById(id);
+        const otherFormId = id === "categoryForm" ? "itemForm" : "categoryForm";
+        const otherForm = document.getElementById(otherFormId);
+
+        const isCurrentlyVisible = !form.classList.contains("hidden");
+
+        otherForm.classList.add("hidden");
+
+        if (isCurrentlyVisible) {
+          form.classList.add("hidden");
+        } else {
+          form.classList.remove("hidden");
+        }
+      }
+
+      function handleCardClick(type, id) {
+        if (type === "item") {
+          window.location.href = `/items/${id}`;
+        } else if (type === "category") {
+          window.location.href = `/categories/${id}`;
+        }
+      }
     </script>
   </body>
 </html>
