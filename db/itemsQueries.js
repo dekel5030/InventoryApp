@@ -25,23 +25,40 @@ async function createItem(item) {
   return rows[0];
 }
 
-async function updateItem(item) {
+async function patchItem(item) {
+  const allowedFields = {
+    name: "name",
+    details: "details",
+    amount: "amount",
+    imageUrl: "image_url",
+    categoryId: "category_id",
+    price: "price",
+  };
+
+  const keys = Object.keys(item).filter(
+    (key) => allowedFields[key] !== undefined && item[key] !== undefined
+  );
+
+  if (keys.length === 0) {
+    throw new Error("No fields provided to update");
+  }
+
+  const setClause = keys
+    .map((key, index) => `${allowedFields[key]} = $${index + 1}`)
+    .join(", ");
+
+  const values = keys.map((key) => item[key]);
+
   const query = `
-    UPDATE items SET 
-      name = $1, 
-      details = $2, 
-      amount = $3, 
-      image_url = $4, 
-      category_id = $5,
-      price = $6
-    WHERE id = $7 
+    UPDATE items
+    SET ${setClause}
+    WHERE id = $${keys.length + 1}
     RETURNING *;
   `;
 
-  const { name, details, amount, imageUrl, categoryId, id, price } = item;
-  const params = [name, details, amount, imageUrl, categoryId, price, id];
-  const { rows } = await runQuery(query, params);
+  values.push(item.id);
 
+  const { rows } = await runQuery(query, values);
   return rows[0] || null;
 }
 
@@ -69,7 +86,7 @@ async function runQuery(query, params = []) {
 module.exports = {
   getAllItems,
   getItemById,
-  updateItem,
+  patchItem,
   deleteItem,
   createItem,
 };

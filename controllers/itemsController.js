@@ -28,19 +28,37 @@ async function renderEditView(req, res) {
       return res.status(404).send("Item not found");
     }
 
-    res.render("items/edit", { item });
+    res.render("layout", {
+      viewToRender: "./partials/editItemSection",
+      item: item,
+    });
   } catch (err) {
     console.error("Render edit error:", err.message);
     res.status(500).send("Server error");
   }
 }
 
-async function updateItem(req, res) {
+async function patchItem(req, res) {
   const id = Number(req.params.id);
-  const { name, details, amount, imageUrl, categoryId } = req.body;
-  const item = { name, details, amount, imageUrl, categoryId };
+
+  const { name, details, amount, categoryId, price } = req.body || {};
+
+  const imageUrl = req.file
+    ? `/uploads/${req.file.filename}`
+    : req.body.imageUrl;
+
+  const item = {
+    id,
+    name,
+    details,
+    amount: amount ? Number(amount) : undefined,
+    imageUrl,
+    categoryId: categoryId ? Number(categoryId) : undefined,
+    price: price ? Number(price) : undefined,
+  };
+
   try {
-    const updatedItem = await itemsDB.updateItem(item);
+    const updatedItem = await itemsDB.patchItem(item);
 
     if (!updatedItem) {
       return res.status(404).json({ error: "Item not found" });
@@ -78,9 +96,13 @@ async function getItem(req, res) {
     if (!item) {
       return res.status(404).json({ error: "Item not found" });
     }
-
+    const { image_url, category_id, ...rest } = item;
     res.render("layout", {
-      item: item,
+      item: {
+        ...rest,
+        imageUrl: image_url,
+        categoryId: category_id,
+      },
       viewToRender: "./partials/itemSection.ejs",
     });
   } catch (err) {
@@ -93,8 +115,13 @@ async function getAllItems(req, res) {
   try {
     const items = await itemsDB.getAllItems();
     const normalizedItems = items.map((item) => ({
-      ...item,
+      id: item.id,
+      name: item.name,
+      details: item.details,
+      amount: item.amount,
       price: item.price !== null ? Number(item.price) : null,
+      imageUrl: item.image_url,
+      categoryId: item.category_id,
     }));
 
     res.render("layout", {
@@ -112,7 +139,7 @@ module.exports = {
   renderCreateView,
   createItem,
   renderEditView,
-  updateItem,
+  patchItem,
   deleteItem,
   getItem,
   getAllItems,

@@ -1,0 +1,67 @@
+.item-form {
+  background-color: var(--header-bg);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-edit-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.item-edit-fields input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-edit-fields input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+}
+
+.item-image-wrapper {
+  position: relative;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.item-image {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.image-edit-button {
+  position: absolute;
+  bottom: 10px;
+  left: 58%;
+  transform: translateX(30%);
+  background-color: var(--accent-color);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.image-edit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Hide actual file input */
+.image-upload-input {
+  display: none;
+}

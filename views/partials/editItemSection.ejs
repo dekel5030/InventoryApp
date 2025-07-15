@@ -1,0 +1,29 @@
+<form class="item-form" method="POST" action="/items/<%= item.id %>?_method=PATCH" enctype="multipart/form-data">
+  <div class="item-image-wrapper">
+    <img 
+      src="<%= item.imageUrl || '/images/placeholder.jpeg' %>" 
+      alt="<%= item.name + ' image' %>" 
+      class="item-image"
+    />
+
+    <label for="imageUpload" class="image-edit-button" title="Change image">
+      🖼️
+    </label>
+    <input
+      type="file"
+      id="imageUpload"
+      name="image"
+      accept="image/*"
+      class="image-upload-input"
+    />
+  </div>
+
+  <article class="item-edit-fields">
+    <input class="item-edit-title" type="text" name="name" value="<%= item.name || '' %>" required />
+    <input class="item-edit-description" type="text" name="details" value="<%= item.details || '' %>" />
+    <input class="item-edit-stock" type="number" name="amount" min="0" value="<%= item.amount || 0 %>" />
+    <input class="item-edit-price" type="number" name="price" step="0.01" value="<%= item.price || '' %>" />
+  </article>
+
+  <button type="submit" class="item-page-buttons edit-button">💾 Save Changes</button>
+</form>

@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const itemsController = require("../controllers/itemsController");
 const itemValidators = require("../validators/items");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 const itemsRouter = Router();
 
@@ -14,7 +16,12 @@ itemsRouter.get("/:id", itemValidators.get, itemsController.getItem);
 
 // ----- Update -----
 itemsRouter.get("/:id/edit", itemsController.renderEditView);
-itemsRouter.put("/:id", itemValidators.update, itemsController.updateItem);
+itemsRouter.patch(
+  "/:id",
+  upload.single("image"),
+  itemValidators.patch,
+  itemsController.patchItem
+);
 
 // ----- Delete -----
 itemsRouter.delete("/:id", itemValidators.delete, itemsController.deleteItem);
