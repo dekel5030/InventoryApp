@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const multer = require("multer");
+
 const itemsController = require("../controllers/itemsController");
 const itemValidators = require("../validators/items");
 const upload = require("../middlewares/upload.js");
@@ -9,7 +9,13 @@ const itemsRouter = Router();
 
 // ----- Create -----
 itemsRouter.get("/new", itemsController.renderCreateView);
-itemsRouter.post("/", itemValidators.create, itemsController.createItem);
+itemsRouter.post(
+  "/",
+  upload.single("image"),
+  multerErrorHandler,
+  itemValidators.create,
+  itemsController.createItem
+);
 
 // ----- Read -----
 itemsRouter.get("/", itemsController.getAllItems);

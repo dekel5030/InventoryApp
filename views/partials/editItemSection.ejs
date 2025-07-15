@@ -1,4 +1,4 @@
-<form class="item-form" method="POST" action="/items/<%= item.id %>?_method=PATCH" enctype="multipart/form-data">
+<form class="item-form" method="POST" action="<%= formAction %>"  enctype="multipart/form-data">
   <div class="item-image-wrapper">
     <img 
       src="<%= item.imageUrl || '/images/placeholder.jpeg' %>" 
@@ -18,12 +18,28 @@
     />
   </div>
 
-  <article class="item-edit-fields">
-    <input class="item-edit-title" type="text" name="name" value="<%= item.name || '' %>" required />
-    <input class="item-edit-description" type="text" name="details" value="<%= item.details || '' %>" />
-    <input class="item-edit-stock" type="number" name="amount" min="0" value="<%= item.amount || 0 %>" />
-    <input class="item-edit-price" type="number" name="price" step="0.01" value="<%= item.price || '' %>" />
-  </article>
+<article class="item-edit-fields">
+  <div class="field-row">
+    <label for="name">Name:</label>
+    <input id="name" class="item-edit-title" type="text" name="name" value="<%= item.name || '' %>" required />
+  </div>
+
+  <div class="field-row">
+    <label for="details">Details:</label>
+    <input id="details" class="item-edit-description" type="text" name="details" value="<%= item.details || '' %>" />
+  </div>
+
+  <div class="field-row">
+    <label for="amount">Amount:</label>
+    <input id="amount" class="item-edit-stock" type="number" name="amount" min="0" value="<%= item.amount || 0 %>" />
+  </div>
+
+  <div class="field-row">
+    <label for="price">Price:</label>
+    <input id="price" class="item-edit-price" type="number" name="price" step="0.01" value="<%= item.price || '' %>" />
+  </div>
+</article>
+
 
   <button type="submit" class="item-page-buttons edit-button">💾 Save Changes</button>
 </form>

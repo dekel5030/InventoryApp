@@ -1,19 +1,43 @@
 const { body, validationResult } = require("express-validator");
 
 const validateCreateItem = [
-  body("name").trim().isString().notEmpty(),
-  body("details").optional().trim().isString(),
+  body("name")
+    .trim()
+    .isString()
+    .withMessage("Name must be a string.")
+    .notEmpty()
+    .withMessage("Name is required."),
 
-  // ✅ Convert string to int
-  body("amount").toInt().isInt({ min: 0 }),
+  body("details")
+    .optional()
+    .trim()
+    .isString()
+    .withMessage("Details must be a string."),
 
-  // ✅ Convert string to int
-  body("categoryId").toInt().isInt({ min: 1 }),
+  body("amount")
+    .notEmpty()
+    .withMessage("Amount is required.")
+    .toInt()
+    .isInt({ min: 0 })
+    .withMessage("Amount must be a non-negative integer."),
 
-  // ✅ Convert string to float (for decimal prices)
-  body("price").toFloat().isFloat({ min: 0 }),
+  // Uncomment if needed
+  // body("categoryId")
+  //   .notEmpty()
+  //   .withMessage("Category ID is required.")
+  //   .toInt()
+  //   .isInt({ min: 1 })
+  //   .withMessage("Category ID must be a positive integer."),
+
+  body("price")
+    .notEmpty()
+    .withMessage("Price is required.")
+    .toFloat()
+    .isFloat({ min: 0 })
+    .withMessage("Price must be a non-negative number."),
 
   (req, res, next) => {
+    console.log("BODY:", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

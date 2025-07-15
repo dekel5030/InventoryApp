@@ -1,7 +1,18 @@
 const itemsDB = require("../db/itemsQueries");
 
 async function renderCreateView(req, res) {
-  res.render("items/create");
+  res.render("layout", {
+    viewToRender: "./partials/editItemSection.ejs",
+    item: {
+      name: "Untiteld",
+      details: "None",
+      amount: 100,
+      imageUrl: null,
+      categoryId: 1,
+      price: 100,
+    },
+    formAction: "/items",
+  });
 }
 
 async function createItem(req, res) {
@@ -9,7 +20,14 @@ async function createItem(req, res) {
   const item = { name, details, amount, imageUrl, categoryId, price };
 
   try {
-    const newItem = await itemsDB.createItem(item);
+    const imageUrl = req.file
+      ? `/uploads/${req.file.filename}`
+      : req.body.imageUrl;
+    const newItem = await itemsDB.createItem({
+      ...item,
+      imageUrl,
+      categoryId: 1,
+    });
 
     res.status(201).json(newItem);
   } catch (err) {
@@ -35,6 +53,7 @@ async function renderEditView(req, res) {
         imageUrl: image_url,
         categoryId: category_id,
       },
+      formAction: `/items/${item.id}?_method=PATCH`,
     });
   } catch (err) {
     console.error("Render edit error:", err.message);

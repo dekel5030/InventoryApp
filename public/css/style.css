@@ -37,4 +37,6 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
+  min-height: 85vh;
 }

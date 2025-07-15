@@ -37,4 +37,23 @@
     });
   </script>
   <script src="/js/confirmDelete.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fileInput = document.getElementById("imageUpload");
+    const imagePreview = document.querySelector(".item-image");
+
+    fileInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+</script>
 </html>
