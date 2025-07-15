@@ -27,10 +27,14 @@ async function renderEditView(req, res) {
     if (!item) {
       return res.status(404).send("Item not found");
     }
-
+    const { image_url, category_id, ...rest } = item;
     res.render("layout", {
       viewToRender: "./partials/editItemSection",
-      item: item,
+      item: {
+        ...rest,
+        imageUrl: image_url,
+        categoryId: category_id,
+      },
     });
   } catch (err) {
     console.error("Render edit error:", err.message);

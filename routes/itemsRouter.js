@@ -1,8 +1,9 @@
 const { Router } = require("express");
+const multer = require("multer");
 const itemsController = require("../controllers/itemsController");
 const itemValidators = require("../validators/items");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const upload = require("../middlewares/upload.js");
+const multerErrorHandler = require("../middlewares/errorHandler.js");
 
 const itemsRouter = Router();
 
@@ -19,6 +20,7 @@ itemsRouter.get("/:id/edit", itemsController.renderEditView);
 itemsRouter.patch(
   "/:id",
   upload.single("image"),
+  multerErrorHandler,
   itemValidators.patch,
   itemsController.patchItem
 );
