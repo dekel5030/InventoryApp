@@ -23,7 +23,7 @@
 }
 
 .field-row label {
-  min-width: 80px; /* adjust as needed */
+  min-width: 80px;
   font-weight: bold;
   text-align: right;
 }
@@ -74,7 +74,6 @@
   background-color: #0056b3;
 }
 
-/* Hide actual file input */
 .image-upload-input {
   display: none;
 }

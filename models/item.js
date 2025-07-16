@@ -1,12 +1,12 @@
 class Item {
-  constructor(data) {
-    this.id = data.id;
-    this.name = data.name || "Untitled";
-    this.details = data.details || "None";
-    this.amount = Number(data.amount) || 0;
-    this.price = Number(data.price) || 0;
-    this.categoryId = Number(data.categoryId) || 1;
-    this.imageUrl = data.imageUrl || "";
+  constructor(data = {}) {
+    this.id = data.id ?? null;
+    this.name = data.name ?? "untitled";
+    this.details = data.details ?? "None";
+    this.amount = Number(data.amount) ?? 0;
+    this.price = Number(data.price ?? 99.9);
+    this.categoryId = Number(data.categoryId) ?? 1;
+    this.imageUrl = data.imageUrl ?? null;
   }
 
   static fromDb(row) {
@@ -24,7 +24,7 @@ class Item {
   static fromForm(body, file) {
     return new Item({
       ...body,
-      imageUrl: file ? `/uploads/${file.filename}` : "",
+      imageUrl: file ? `/uploads/${file.filename}` : null,
       categoryId: 1,
     });
   }

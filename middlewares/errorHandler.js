@@ -1,8 +1,17 @@
-function multerErrorHandler(err, req, res, next) {
-  if (err.message === "Only image files are allowed") {
-    return res.status(400).json({ error: err.message });
+function errorHandler(err, req, res, next) {
+  console.error("❌ Error:", err.message);
+
+  if (req.accepts("html")) {
+    res.status(500).render("error", {
+      pageTitle: "Server Error",
+      message: "Something went wrong.",
+      error: err,
+    });
+  } else {
+    res.status(500).json({ error: "Server error" });
   }
-  next(err);
 }
 
-module.exports = multerErrorHandler;
+module.exports = {
+  errorHandler,
+};

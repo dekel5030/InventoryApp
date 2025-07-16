@@ -10,14 +10,19 @@ async function confirmDelete(itemId) {
       },
     });
 
-    if (response.ok) {
-      window.location.href = "/items";
-    } else {
-      const result = await response.json();
-      alert(result.error || "Failed to delete item.");
+    if (!response.ok) {
+      const error = await response.json();
+      alert(error.error || "Failed to delete item.");
+      return;
+    }
+
+    const data = await response.json();
+
+    if (data.redirectTo) {
+      window.location.href = data.redirectTo;
     }
   } catch (err) {
-    console.error("Delete failed:", err);
-    alert("Something went wrong.");
+    console.error("Fetch error:", err);
+    alert("Something went wrong. Please try again.");
   }
 }

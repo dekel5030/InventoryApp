@@ -3,7 +3,7 @@ const { Router } = require("express");
 const itemsController = require("../controllers/itemsController");
 const itemValidators = require("../validators/items");
 const upload = require("../middlewares/upload.js");
-const multerErrorHandler = require("../middlewares/errorHandler.js");
+const multerErrorHandler = require("../middlewares/filesErrorHandler.js");
 
 const itemsRouter = Router();
 

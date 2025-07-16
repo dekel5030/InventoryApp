@@ -33,17 +33,8 @@ async function createItem(item) {
 }
 
 async function patchItem(item) {
-  const allowedFields = {
-    name: "name",
-    details: "details",
-    amount: "amount",
-    imageUrl: "image_url",
-    categoryId: "category_id",
-    price: "price",
-  };
-
   const keys = Object.keys(item).filter(
-    (key) => allowedFields[key] !== undefined && item[key] !== undefined
+    (key) => key !== "id" && item[key] != null
   );
 
   if (keys.length === 0) {
@@ -51,7 +42,7 @@ async function patchItem(item) {
   }
 
   const setClause = keys
-    .map((key, index) => `${allowedFields[key]} = $${index + 1}`)
+    .map((key, index) => `${key} = $${index + 1}`)
     .join(", ");
 
   const values = keys.map((key) => item[key]);
