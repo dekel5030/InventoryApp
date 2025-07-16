@@ -1,6 +1,6 @@
 const itemsDB = require("../db/itemsQueries");
 const categoriesDB = require("../db/categoryQueries.js");
-const Item = require("../models/Item");
+const Item = require("../models/item");
 const Category = require("../models/category");
 const asyncHandler = require("../middlewares/asyncHandler");
 
