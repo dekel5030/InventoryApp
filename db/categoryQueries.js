@@ -14,7 +14,6 @@ async function getAllCategories() {
 async function createCategory(category) {
   const query = `INSERT INTO ${table} (${columns.NAME}, ${columns.IMAGE_URL}) VALUES ($1, $2) RETURNING *;`;
   const { rows } = await runQuery(query, [category.name, category.image_url]);
-
   return rows[0];
 }
 

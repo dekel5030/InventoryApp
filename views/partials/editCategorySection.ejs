@@ -1,0 +1,30 @@
+<form class="category-form" method="POST" action="<%= formAction %>"  enctype="multipart/form-data">
+  <div class="category-image-wrapper">
+    <img 
+      src="<%= category.imageUrl || '/images/placeholder.jpeg' %>" 
+      alt="<%= category.name + ' image' %>" 
+      class="category-image"
+    />
+
+    <label for="imageUpload" class="image-edit-button" title="Change image">
+      🖼️
+    </label>
+    <input
+      type="file"
+      id="imageUpload"
+      name="image"
+      accept="image/*"
+      class="image-upload-input"
+    />
+  </div>
+
+<article class="category-edit-fields">
+  <div class="field-row">
+    <label for="name">Name:</label>
+    <input id="name" class="category-edit-title" type="text" name="name" value="<%= category.name || '' %>" required />
+  </div>
+</article>
+
+
+  <button type="submit" class="category-page-buttons edit-button">💾 Save Changes</button>
+</form>

@@ -14,12 +14,13 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extends: true }));
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
-app.use(errorHandler);
 app.use("/uploads", express.static("uploads"));
 
 app.use("/items", itemsRouter);
 app.use("/categories", categoriesRouter);
 app.get("/", homeController.renderHome);
+
+app.use(errorHandler);
 
 app.listen(PORT, () =>
   console.log(`Server has successfuly start on port: ${PORT}`)

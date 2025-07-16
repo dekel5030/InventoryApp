@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/mainSection.css" />
     <link rel="stylesheet" href="/css/editItemSection.css" />
     <link rel="stylesheet" href="/css/categorySection.css" />
+    <link rel="stylesheet" href="/css/editCategorySection.css" />
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
@@ -47,7 +48,7 @@
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("imageUpload");
-    const imagePreview = document.querySelector(".item-image");
+    const imagePreview = document.querySelector(".item-image, .category-image");
 
     fileInput.addEventListener("change", function () {
       const file = this.files[0];
