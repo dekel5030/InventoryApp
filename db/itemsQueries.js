@@ -1,23 +1,31 @@
-const pool = require("./pool");
+const { runQuery } = require("./runQuery.js");
+const { TABLES, COLUMNS } = require("./constants");
+
+const table = TABLES.ITEMS;
+const columns = COLUMNS.ITEMS;
 
 async function getAllItems() {
-  const query = `SELECT * FROM items`;
+  const query = `SELECT * FROM ${table};`;
   const { rows } = await runQuery(query);
 
   return rows;
 }
 
 async function getItemById(id) {
-  const query = `SELECT * FROM items WHERE id = $1 LIMIT 1`;
+  const query = `SELECT * FROM ${table} WHERE ${columns.ID} = $1 LIMIT 1;`;
   const { rows } = await runQuery(query, [id]);
 
   return rows[0];
 }
 
 async function createItem(item) {
-  const query = `INSERT INTO items (name, details, amount, image_url, category_id, price)
-                 VALUES ($1, $2, $3, $4, $5, $6)
-                 RETURNING *;`;
+  const query = `
+                INSERT INTO ${table} (${columns.NAME}, 
+                            ${columns.DETAILS}, ${columns.AMOUNT}, 
+                            ${columns.IMAGE_URL}, ${columns.CATEGORY_ID}, ${columns.PRICE})
+                VALUES ($1, $2, $3, $4, $5, $6)
+                RETURNING *;
+                `;
 
   const params = [
     item.name,
@@ -48,11 +56,11 @@ async function patchItem(item) {
   const values = keys.map((key) => item[key]);
 
   const query = `
-    UPDATE items
-    SET ${setClause}
-    WHERE id = $${keys.length + 1}
-    RETURNING *;
-  `;
+                UPDATE ${table}
+                SET ${setClause}
+                WHERE ${columns.ID} = $${keys.length + 1}
+                RETURNING *;
+                `;
 
   values.push(item.id);
 
@@ -61,7 +69,7 @@ async function patchItem(item) {
 }
 
 async function deleteItem(id) {
-  const query = "DELETE FROM items WHERE id = $1 RETURNING *";
+  const query = `DELETE FROM ${table} WHERE ${columns.ID} = $1 RETURNING *;`;
   const { rows } = await runQuery(query, [id]);
 
   if (rows.length === 0) {
@@ -69,16 +77,6 @@ async function deleteItem(id) {
   }
 
   return rows[0];
-}
-
-async function runQuery(query, params = []) {
-  try {
-    const result = await pool.query(query, params);
-    return result;
-  } catch (err) {
-    console.error("Database error:", err.message);
-    throw new Error("Database operation failed");
-  }
 }
 
 module.exports = {
