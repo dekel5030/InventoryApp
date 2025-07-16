@@ -38,10 +38,10 @@ async function main() {
     console.log("Inserting categories...");
 
     const categoryResult = await pool.query(`
-      INSERT INTO categories (name) VALUES 
-      ('Laptops'),
-      ('Monitors'),
-      ('Keyboards')
+      INSERT INTO categories (name, image_url) VALUES 
+      ('Watches', '/images/apple_watch_ultra_2.jpeg'),
+      ('Phones', '/images/iphone_16.jpeg'),
+      ('Laptops', '/images/macbook_pro.jpeg')
       RETURNING *;
     `);
 
@@ -52,10 +52,21 @@ async function main() {
     console.log("Inserting items...");
 
     await pool.query(`
-    INSERT INTO items (name, details, amount, image_url, price, category_id) VALUES
-    ('MacBook Pro', '16-inch, Apple M2 Pro', 5, '/uploads/macbook.jpg', 2499.99, ${categories[0].id}),
-    ('LG UltraFine', '4K USB-C Monitor', 3, '/uploads/lg-monitor.jpg', 699.99, ${categories[1].id}),
-    ('Mechanical Keyboard', 'RGB, Blue switches', 10, '/uploads/keyboard.jpg', 89.99, ${categories[2].id});
+      INSERT INTO items (name, details, amount, image_url, price, category_id) VALUES
+      -- Watches
+      ('Apple Watch SE', 'Affordable and capable', 15, '/images/apple_watch_se.jpeg', 249.99, ${categories[0].id}),
+      ('Apple Watch Series 10', 'Latest gen health tracker', 10, '/images/apple_watch_series_10.jpeg', 399.99, ${categories[0].id}),
+      ('Apple Watch Ultra 2', 'Rugged outdoor design', 5, '/images/apple_watch_ultra_2.jpeg', 799.99, ${categories[0].id}),
+
+      -- Phones
+      ('iPhone 16', 'Flagship performance', 20, '/images/iphone_16.jpeg', 1099.99, ${categories[1].id}),
+      ('iPhone 16 Pro', 'Premium build and features', 8, '/images/iphone_16_pro.jpeg', 1399.99, ${categories[1].id}),
+      ('iPhone 16e', 'Budget friendly option', 12, '/images/iphone_16e.jpeg', 799.99, ${categories[1].id}),
+
+      -- Laptops
+      ('MacBook Air', 'Lightweight, M3 chip', 10, '/images/macbook_air.jpeg', 999.99, ${categories[2].id}),
+      ('MacBook Pro', 'Performance beast', 4, '/images/macbook_pro.jpeg', 2499.99, ${categories[2].id}),
+      ('iMac', 'Desktop all-in-one', 6, '/images/imac.jpeg', 1799.99, ${categories[2].id});
     `);
     console.log("Items inserted");
 
