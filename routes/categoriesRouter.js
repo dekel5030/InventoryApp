@@ -2,6 +2,11 @@ const { Router } = require("express");
 const categoriesController = require("../controllers/categoriesController.js");
 const upload = require("../middlewares/upload.js");
 const multerErrorHandler = require("../middlewares/filesErrorHandler.js");
+const {
+  validateCategoryId,
+  validateCategoryBody,
+} = require("../validators/categories/categoryValidator.js");
+
 const CategoriesRouter = Router();
 
 // CREATE
@@ -10,22 +15,37 @@ CategoriesRouter.post(
   "/",
   upload.single("image"),
   multerErrorHandler,
+  validateCategoryBody,
   categoriesController.createCategory
 );
 
 // READ
-CategoriesRouter.get("/:id", categoriesController.getCategory);
+CategoriesRouter.get(
+  "/:id",
+  validateCategoryId,
+  categoriesController.getCategory
+);
 CategoriesRouter.get("/", categoriesController.getAllCategories);
 
 // DELETE
-CategoriesRouter.delete("/:id", categoriesController.deleteCategory);
+CategoriesRouter.delete(
+  "/:id",
+  validateCategoryId,
+  categoriesController.deleteCategory
+);
 
 // UPDATE
-CategoriesRouter.get("/:id/edit", categoriesController.renderEditView);
+CategoriesRouter.get(
+  "/:id/edit",
+  validateCategoryId,
+  categoriesController.renderEditView
+);
+
 CategoriesRouter.patch(
   "/:id",
   upload.single("image"),
   multerErrorHandler,
+  validateCategoryId,
   categoriesController.patchCategory
 );
 

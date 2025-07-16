@@ -38,6 +38,17 @@
     <label for="price">Price:</label>
     <input id="price" class="item-edit-price" type="number" name="price" step="0.01" value="<%= item.price || '' %>" />
   </div>
+  
+  <div class="field-row">
+    <label for="category">Category:</label>
+    <select id="category" name="categoryId" class="item-edit-category">
+      <% categories.forEach((cat) => { %>
+        <option value="<%= cat.id %>" <%= item.categoryId === cat.id ? "selected" : "" %>>
+          <%= cat.name %>
+        </option>
+      <% }); %>
+    </select>
+  </div>
 </article>
 
 

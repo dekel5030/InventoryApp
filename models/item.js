@@ -25,7 +25,6 @@ class Item {
     return new Item({
       ...body,
       imageUrl: file ? `/uploads/${file.filename}` : null,
-      categoryId: 1,
     });
   }
 

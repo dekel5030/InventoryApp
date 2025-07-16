@@ -1,13 +1,19 @@
 const itemsDB = require("../db/itemsQueries");
+const categoriesDB = require("../db/categoryQueries.js");
 const Item = require("../models/Item");
+const Category = require("../models/category");
 const asyncHandler = require("../middlewares/asyncHandler");
 
 async function renderCreateView(req, res) {
+  const dbCategories = await categoriesDB.getAllCategories();
+  const categories = dbCategories.map(Category.fromDb);
+
   res.render("layout", {
     viewToRender: "./partials/editItemSection.ejs",
     item: new Item(),
     formAction: "/items",
     pageTitle: "Add new item",
+    categories,
   });
 }
 
@@ -24,12 +30,17 @@ async function renderEditView(req, res) {
   if (!item) {
     return res.status(404).send("Item not found");
   }
+
   item = Item.fromDb(item);
+  const dbCategories = await categoriesDB.getAllCategories();
+  const categories = dbCategories.map(Category.fromDb);
+
   res.render("layout", {
     viewToRender: "./partials/editItemSection",
     item,
     formAction: `/items/${item.id}?_method=PATCH`,
     pageTitle: `${item.name} editor`,
+    categories,
   });
 }
 
