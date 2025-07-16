@@ -13,6 +13,11 @@ const COLUMNS = {
     CATEGORY_ID: "category_id",
     PRICE: "price",
   },
+  CATEGORIES: {
+    ID: "id",
+    NAME: "name",
+    IMAGE_URL: "image_url",
+  },
 };
 
 module.exports = {

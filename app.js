@@ -1,5 +1,6 @@
 const express = require("express");
 const itemsRouter = require("./routes/itemsRouter");
+const categoriesRouter = require("./routes/categoriesRouter");
 const homeController = require("./controllers/homeController");
 const methodOverride = require("method-override");
 const { errorHandler } = require("./middlewares/errorHandler");
@@ -17,6 +18,7 @@ app.use(errorHandler);
 app.use("/uploads", express.static("uploads"));
 
 app.use("/items", itemsRouter);
+app.use("/categories", categoriesRouter);
 app.get("/", homeController.renderHome);
 
 app.listen(PORT, () =>

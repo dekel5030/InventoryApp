@@ -1,7 +1,7 @@
 <section class="item-container">
   <div class="item-controls">
     <button class="item-page-buttons delete-button" aria-label="Delete item" 
-    onclick="confirmDelete(<%= item.id %>)">X</button>
+    onclick="confirmDelete('items', <%= item.id %>)">X</button>
     <button class="item-page-buttons edit-button" aria-label="Edit item" 
     onclick="location.href='/items/<%= item.id %>/edit'">✏️</button>
   </div> 

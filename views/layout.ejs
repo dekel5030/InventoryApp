@@ -11,13 +11,20 @@
     <link rel="stylesheet" href="/css/itemSection.css" />
     <link rel="stylesheet" href="/css/mainSection.css" />
     <link rel="stylesheet" href="/css/editItemSection.css" />
+    <link rel="stylesheet" href="/css/categorySection.css" />
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
 
-    <main class="main-content">
-      <%- include(locals.viewToRender) %>
-    </main>
+  <main class="main-content">
+    <% if (Array.isArray(locals.viewToRender)) { %>
+      <% viewToRender.forEach((viewPath) => { %>
+        <%- include(viewPath) %>
+      <% }); %>
+    <% } else { %>
+      <%- include(viewToRender) %>
+    <% } %>
+  </main>
 
     <%- include("./partials/footer.ejs") %>
   </body>

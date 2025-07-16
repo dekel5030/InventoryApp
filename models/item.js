@@ -1,7 +1,7 @@
 class Item {
   constructor(data = {}) {
     this.id = data.id ?? null;
-    this.name = data.name ?? "untitled";
+    this.name = data.name ?? "Untitled";
     this.details = data.details ?? "None";
     this.amount = Number(data.amount) ?? 0;
     this.price = Number(data.price ?? 99.9);

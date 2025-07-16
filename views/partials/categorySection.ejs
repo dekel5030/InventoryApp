@@ -1,0 +1,20 @@
+<section class="category-container">
+  <div class="category-controls">
+    <button class="category-page-buttons delete-button" aria-label="Delete category" 
+    onclick="confirmDelete('categories', <%= category.id %>)">X</button>
+    <button class="category-page-buttons edit-button" aria-label="Edit category" 
+    onclick="location.href='/categories/<%= category.id %>/edit'">✏️</button>
+  </div> 
+
+  <div class="category-image-wrapper">
+    <img 
+      src="<%= category.imageUrl || '/images/placeholder.jpeg' %>" 
+      alt="<%= category.name + ' image' %>" 
+      class="category-image"
+    />
+  </div>
+
+  <article class="category-details">
+    <h2 class="category-title"><%= category.name %></h2>
+  </article>
+</section>

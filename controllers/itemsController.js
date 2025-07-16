@@ -29,7 +29,7 @@ async function renderEditView(req, res) {
     viewToRender: "./partials/editItemSection",
     item,
     formAction: `/items/${item.id}?_method=PATCH`,
-    pageTitle: "Edit item",
+    pageTitle: `${item.name} editor`,
   });
 }
 
@@ -67,6 +67,7 @@ async function getItem(req, res) {
   res.render("layout", {
     item: item,
     viewToRender: "./partials/itemSection.ejs",
+    pageTitle: `${item.name}`,
   });
 }
 

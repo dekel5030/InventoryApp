@@ -1,9 +1,9 @@
-async function confirmDelete(itemId) {
-  const confirmed = confirm("Are you sure you want to delete this item?");
+async function confirmDelete(resourcePath, resourceId) {
+  const confirmed = confirm("Are you sure you want to delete this?");
   if (!confirmed) return;
 
   try {
-    const response = await fetch(`/items/${itemId}`, {
+    const response = await fetch(`/${resourcePath}/${resourceId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -12,7 +12,7 @@ async function confirmDelete(itemId) {
 
     if (!response.ok) {
       const error = await response.json();
-      alert(error.error || "Failed to delete item.");
+      alert(error.error || "Failed to delete.");
       return;
     }
 
