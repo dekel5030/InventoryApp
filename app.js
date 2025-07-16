@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extends: true }));
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads"));
+app.use(express.json());
 
 app.use("/items", itemsRouter);
 app.use("/categories", categoriesRouter);

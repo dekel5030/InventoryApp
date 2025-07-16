@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const verifyAdminPassword = require("../middlewares/adminPassword.js");
 const categoriesController = require("../controllers/categoriesController.js");
 const upload = require("../middlewares/upload.js");
 const multerErrorHandler = require("../middlewares/filesErrorHandler.js");
@@ -31,6 +32,7 @@ CategoriesRouter.get("/", categoriesController.getAllCategories);
 CategoriesRouter.delete(
   "/:id",
   validateCategoryId,
+  verifyAdminPassword,
   categoriesController.deleteCategory
 );
 
@@ -46,6 +48,7 @@ CategoriesRouter.patch(
   upload.single("image"),
   multerErrorHandler,
   validateCategoryId,
+  verifyAdminPassword,
   categoriesController.patchCategory
 );
 

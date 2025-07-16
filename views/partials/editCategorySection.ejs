@@ -28,3 +28,24 @@
 
   <button type="submit" class="category-page-buttons edit-button">💾 Save Changes</button>
 </form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector(".category-form");
+
+    form.addEventListener("submit", function (e) {
+      const password = prompt("Enter admin password:");
+      if (!password) {
+        e.preventDefault();
+        alert("Action cancelled.");
+        return;
+      }
+
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "adminPassword";
+      hidden.value = password;
+      form.appendChild(hidden);
+    });
+  });
+</script>
